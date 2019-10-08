@@ -22,9 +22,8 @@ def create_app():
     @app.route("/")
     def index():
         title = "On-line тестирование"
-        #users_list = Users.query.all()
-        users_list = "Проверьте свои знания"
-        return render_template('index.html', page_title=title, users_list =users_list)
+        #users_list = "Проверьте свои знания"
+        return render_template('index.html', page_title=title)
     
     @app.route("/login")
     def login():
@@ -32,7 +31,7 @@ def create_app():
             return redirect(url_for('index'))
         title = "Авторизация на сайте"
         login_form = LoginForm()
-        return render_template('login.html', page_title=title, form =login_form)
+        return render_template('login.html', page_title=title, form=login_form)
  
     @app.route('/process_login', methods=['POST'])
     def process_login():
