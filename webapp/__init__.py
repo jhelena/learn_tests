@@ -3,7 +3,7 @@ from flask_login import LoginManager, current_user, login_required, login_user, 
 
 from webapp.forms import LoginForm
 from webapp.model import db, Users
-#from webapp.users_db import users_list
+from webapp.users_db import users_list
 #username='admin'
 
 def create_app():
@@ -22,8 +22,14 @@ def create_app():
     @app.route("/")
     def index():
         title = "On-line тестирование"
-        #users_list = "Проверьте свои знания"
-        return render_template('index.html', page_title=title)
+        if current_user.is_authenticated:
+            global users_list
+            if current_user.is_admin:
+                users_list = Users.query.all()
+                #users_list = "Проверьте свои знания"
+            else:
+                users_list =''
+        return render_template('index.html', page_title=title, users_list=users_list)
     
     @app.route("/login")
     def login():
