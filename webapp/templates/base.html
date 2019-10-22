@@ -11,39 +11,16 @@
     <title>{{ page_title}}</title>
   </head>
   <body>
+      {% include "menu.html" %}
     <div class="container">
         <h1>{{ page_title}}</h1>
-    <div class="row">
-        <div class="col-4">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <div class="alert alert-warning" role="alert">
-                    {% for message in messages %}
-                        {{ message }} <br>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            {% endwith %}
-            <form action="{{ url_for('process_login') }}" method="POST"> <!-- в   -->
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.username.label }}
-                {{ form.username() }}
-            </div>
-            <div class="form-group">
-                {{ form.password.label }} <br>
-                {{ form.password() }}
-            </div>
-            <p>
-                {{ form.submit() }}
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-8">
-            
-        </div>
-    </div>
+        {% block content %} {% endblock %}
+
+    {% if current_user.is_authenticated %}
+    <p><a href="{{ url_for('user.logout') }}">Logout</a></p>
+    {% else %}
+    <p><a href="{{ url_for('user.login') }}">Login</a></p>
+    {% endif %}
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

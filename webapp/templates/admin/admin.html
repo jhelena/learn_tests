@@ -3,7 +3,6 @@
 {% block content %} 
     <div class="row">
       <div class="col-6">
-          <br> {{ mess }} <br>   
         {% if current_user.is_authenticated %}
         <p>  Здравствуйте, {{ current_user.full_name }}</p>
         {% endif %}
@@ -19,7 +18,7 @@
         </div>        
       <div class="col-6">
           {% if current_user.is_admin %}
-        <h2>Список пользователей</h2> 
+        <h2>Список пользователей для администратора</h2> 
           <table border="1"> 
             <tr><th> Имя пользователя </th><th> Роль </th><th> Логин </th></tr>
             {% for users in users_list %} 
@@ -31,5 +30,5 @@
           </table>
           {% endif %}
       </div>
-    </div>
-  {% endblock %}
+  </div>
+    {% endblock %}
