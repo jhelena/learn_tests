@@ -32,7 +32,14 @@ def process_reg():
         new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Вы успешно зарегистрировались!')
+        flash('Пользователь успешно зарегистрирован!')
         return redirect(url_for('user.login'))
+    else:
+        for field, errors in form.errors.items():
+            flash('Ошибка в поле "{}": - {}'.format(
+                getattr(form, field).label.text,
+                errors
+            ))
+        return redirect(url_for('admin.register'))
     flash('Пожалуйста, исправьте ошибки в форме')
     return redirect(url_for('admin.register'))
