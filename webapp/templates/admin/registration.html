@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %} 
+    <div class="row">
+        <div class="col-4">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                    {% for message in messages %}
+                        {{ message }} <br>
+                    {% endfor %}
+                
+                </div>
+                {% endif %}
+            {% endwith %}
+            <form action="{{ url_for('admin.process_reg') }}" method="POST"> <!-- в   -->
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.user_name.label }}
+                {{ form.user_name() }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }} <br>
+                {{ form.password() }}
+            </div>
+            <div class="form-group">
+                    {{ form.password2.label }} <br>
+                    {{ form.password2() }}
+                </div>
+            <div class="form-group">
+                    {{ form.role.label }}
+                    {{ form.role() }}
+                </div>
+            <div class="form-group">
+                {{ form.full_name.label }}
+                {{ form.full_name() }}
+            </div>
+            <div class="form-group">
+                {{ form.major.label }}
+                {{ form.major() }}
+            </div>  
+            <div class="form-group">
+                {{ form.prof.label }}
+                {{ form.prof() }}
+            </div>  
+            <div class="form-group">
+                {{ form.depart.label }}
+                {{ form.depart() }}
+            </div>                         
+            <p>
+                {{ form.submit() }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            
+        </div>
+    </div>
+{% endblock %}

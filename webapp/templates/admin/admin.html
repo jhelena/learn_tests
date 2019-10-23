@@ -15,6 +15,7 @@
                 </div>
                 {% endif %}
             {% endwith %}
+            <p><a href="{{ url_for('admin.register') }}">Зарегистрировать пользователя</a></p>
         </div>        
       <div class="col-6">
           {% if current_user.is_admin %}
