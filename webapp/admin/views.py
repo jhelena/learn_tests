@@ -3,7 +3,8 @@ from flask_login import current_user, login_required
 from webapp.db import db
 from webapp.user.decorators import admin_required
 from webapp.user.models import Users
-from webapp.user.forms import LoginForm, RegisrationForm
+from webapp.user.forms import LoginForm
+from webapp.admin.forms import RegisrationForm
 
 blueprint = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -17,6 +18,7 @@ def admin_index():
     #return render_template('login.html', page_title=title)
 
 @blueprint.route('/register')
+@admin_required
 def register():
     #if current_user.is_authenticated:
         #return redirect(url_for('index'))

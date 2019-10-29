@@ -9,9 +9,9 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(128), nullable=False)
     full_name = db.Column(db.String, unique=True, nullable=False)
     role = db.Column(db.String(12), index=True, nullable=False)
-    id_major = db.Column(db.Integer, primary_key=False)
-    id_prof = db.Column(db.Integer, primary_key=False)
-    id_depart = db.Column(db.Integer, primary_key=False)
+    id_major = db.Column(db.Integer, nullable=True)
+    id_prof = db.Column(db.Integer, nullable=True)
+    id_depart = db.Column(db.Integer, nullable=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -26,3 +26,12 @@ class Users(db.Model, UserMixin):
     def __repr__(self):
         return '<Пользователь {} {}>'.format(self.full_name, self.role)
         #return format(self.full_name)
+
+
+class Depart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    depart_name = db.Column(db.String(120), index=True, unique=True, nullable=False)
+    full_name = db.Column(db.String(255), unique=True, nullable=False)
+    
+    def __repr__(self):
+        return '<Кафедра {} {}>'.format(self.depart_name, self.full_name)

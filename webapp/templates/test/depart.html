@@ -15,21 +15,14 @@
                 </div>
                 {% endif %}
             {% endwith %}
-            <p><a href="{{ url_for('admin.register') }}">Зарегистрировать пользователя </a></p>
+            <p><a href="{{ url_for('test.input') }}">Заполнить тест </a></p>
         </div>        
       <div class="col-6">
-          {% if current_user.is_admin %}
-        <h2>Список пользователей для администратора</h2> 
+        <h2>Ваши тесты</h2> 
           <table border="1"> 
-            <tr><th> Имя пользователя </th><th> Роль </th><th> Логин </th></tr>
-            {% for users in users_list %} 
-              <tr><td>{{ users.full_name}}</td>
-                  <td>{{ users.role }}</td>
-                  <td>{{ users.user_name }}</td>
-              </tr>
-			      {% endfor%}
+            <tr><th> Направление </th><th> Профиль </th><th> Дисциплина</th></tr>
+            <!-- Здесь можно вывести список тестов, аналогично списку юзеров у админа (см.admin.html) -->
           </table>
-          {% endif %}
       </div>
   </div>
     {% endblock %}

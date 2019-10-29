@@ -4,15 +4,17 @@ from flask_migrate import Migrate
 
 from webapp.db import db
 from webapp.admin.views import blueprint as admin_blueprint
-from webapp.user.models import Users
+from webapp.user.models import Users, Depart
+from webapp.test.models import Major, Prof
+from webapp.test.views import blueprint as test_blueprint
 from webapp.users_db import users_list
 from webapp.user.views import blueprint as user_blueprint
-
 
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('config.py')
     db.init_app(app)
+     
     migrate = Migrate(app, db)
 
     login_manager = LoginManager()

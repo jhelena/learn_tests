@@ -1,4 +1,7 @@
-from webapp.test.models import Tests
+
+'''
+from webapp.user.models import Users, Depart
+from webapp.test.models import Major, Prof, Kurs
 
 @app.route("/test")
 def index():
@@ -10,3 +13,4 @@ def index():
         else:
             users_list =''
     return render_template('test.html', page_title=title, users_list=users_list)
+    '''

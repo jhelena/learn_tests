@@ -1,16 +1,9 @@
 from flask_wtf import FlaskForm
 from webapp.user.models import Users
-from wtforms import BooleanField, PasswordField, StringField, SubmitField
+from wtforms import PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 #from wtforms.validators import DataRequired, Email, EqualTo  # было бы с Email, если бы у нас был email в форме регистрации 
 
-class LoginForm(FlaskForm):
-    username = StringField("Имя пользователя", validators=[DataRequired()], render_kw={"class": "form-control"})
-    password = PasswordField("Пароль", validators=[DataRequired()], render_kw={"class": "form-control"})
-    remember_me = BooleanField('Запомнить меня', default=True, render_kw={"class": "form-check-input"})
-    submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
-
-'''
 class RegisrationForm(FlaskForm):
     user_name = StringField("Логин пользователя", validators=[DataRequired()], render_kw={"class": "form-control"})
     password = PasswordField("Пароль", validators=[DataRequired()], render_kw={"class": "form-control"})
@@ -31,5 +24,3 @@ class RegisrationForm(FlaskForm):
         users_count = Users.query.filter_by(full_name=full_name.data).count()
         if users_count > 0:
             raise ValidationError('Пользователь с таким именем уже зарегистрирован')
-
-'''

@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %} 
-    <div class="row">
-      <div class="col-6">
-          <br> {{ mess }} <br>   
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <br> {{ mess }} <br>   
         {% if current_user.is_authenticated %}
+        <h2>Добро пожаловать!</h2>
         <p> Начальная страница</p>
+        {% else %}
+        <p style="text-align: center;"> <img src="/static/img/pc1.png"></p>
         {% endif %}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -16,9 +22,9 @@
                 </div>
                 {% endif %}
             {% endwith %}
-        </div>        
-      <div class="col-6">
+    </div>        
+    <div class="col-2">
 
-      </div>
+    </div>
     </div>
   {% endblock %}

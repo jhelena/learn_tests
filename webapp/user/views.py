@@ -24,6 +24,8 @@ def process_login():
             flash('Вы успешно зашли на сайт')
             if user.role =='admin':
                 return redirect(url_for('admin.admin_index'))
+            elif user.role =='department':
+                return redirect(url_for('test.test_index'))
             else:
                 return redirect(url_for('index'))
     
