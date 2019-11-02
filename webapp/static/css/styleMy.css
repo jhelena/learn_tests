@@ -1,0 +1,19 @@
+body,h1,h2 {
+    color: #323232;
+}
+.left {
+    float: left;
+    margin-right: 100px;
+    border-width: 1; border: solid;
+}
+.clear {
+    clear: both;
+}
+
+.marginr{
+    margin-right: 100px;
+} 
+.tableMy,th,tr,td {
+    border: 1px solid  #323232;
+    padding: 8px;
+}

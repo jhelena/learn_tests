@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %} 
-    <div class="row">
-      <div class="col-6">
-        {% if current_user.is_authenticated %}
-        <p>  Здравствуйте, {{ current_user.full_name }}</p>
+  <div class="row">
+    <div class="col-8">
+ {% if current_user.is_authenticated %}
+ <!-- <p><a href="{{ url_for('admin.register') }}">Зарегистрировать пользователя </a></p> 
+        <p>  Здравствуйте, {{ current_user.full_name }}</p> -->
         {% endif %}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -15,21 +16,23 @@
                 </div>
                 {% endif %}
             {% endwith %}
-            <p><a href="{{ url_for('admin.register') }}">Зарегистрировать пользователя </a></p>
-        </div>        
-      <div class="col-6">
-          {% if current_user.is_admin %}
-        <h2>Список пользователей для администратора</h2> 
-          <table border="1"> 
-            <tr><th> Имя пользователя </th><th> Роль </th><th> Логин </th></tr>
+    {% if current_user.is_admin %}
+      <h2>Список пользователей для администратора</h2> 
+      <p>
+        <table class='tableMy'> 
+          <tr><th> Имя пользователя </th><th> Роль </th><th> Логин </th></tr>
             {% for users in users_list %} 
               <tr><td>{{ users.full_name}}</td>
                   <td>{{ users.role }}</td>
                   <td>{{ users.user_name }}</td>
               </tr>
-			      {% endfor%}
-          </table>
-          {% endif %}
-      </div>
+            {% endfor%}
+        </table>
+      </p>
+    {% endif %} 
+      </div>        
+    <div class="col-4">
+
+    </div>
   </div>
     {% endblock %}

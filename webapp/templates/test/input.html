@@ -11,48 +11,57 @@
         {% endif %}
     {% endwith %}
     <div class="row">
-        <div class="col-4">
-        <form action="{{ url_for('test.process-input') }}" method="POST"> <!-- в   -->
+        <div class="col-6">
+        <form action="{{ url_for('test.process_input') }}" method="POST"> 
             {{ form.hidden_tag() }}
             <div class="form-group">
-                {{ form.user_name.label }}
-                {{ form.user_name() }}
+                {{ form.major_id.label }}
+                {{ form.major_id() }}
             </div>
             <div class="form-group">
-                {{ form.password.label }} <br>
-                {{ form.password() }}
+                {{ form.prof_id.label }} <br>
+                {{ form.prof_id() }}
             </div>
             <div class="form-group">
-                    {{ form.password2.label }} <br>
-                    {{ form.password2() }}
-                </div>
-            <div class="form-group">
-                    {{ form.role.label }}
-                    {{ form.role() }}
-                </div>
-            <div class="form-group">
-                {{ form.full_name.label }}
-                {{ form.full_name() }}
+                {{ form.kurs_id.label }}
+                {{ form.kurs_id() }}
             </div>
             <div class="form-group">
-                {{ form.major.label }}
-                {{ form.major() }}
-            </div>  
+                {{ form.q_text.label }} <br>
+                {{ form.q_text() }}
+            </div>
             <div class="form-group">
-                {{ form.prof.label }}
-                {{ form.prof() }}
-            </div>  
+                {{ form.answ1.label }}
+                {{ form.answ1() }}
+                <p class="form-group form-check">
+                    {{ form.answ1_true() }}
+                    {{ form.answ1_true.label(class_='form-check-label') }}
+                </p>
+            </div>
             <div class="form-group">
-                {{ form.depart.label }}
-                {{ form.depart() }}
-            </div>                         
-            <p>
-                {{ form.submit() }}
-            </p>
+                {{ form.answ2.label }}
+                {{ form.answ2() }}
+                <p class="form-group form-check">
+                    {{ form.answ2_true() }}
+                    {{ form.answ2_true.label(class_='form-check-label') }} 
+                </p>
+            </div>
+            <div class="form-group">
+                {{ form.answ3.label }}
+                {{ form.answ3() }}
+                <p class="form-group form-check">
+                   {{ form.answ3_true() }}
+                   {{ form.answ3_true.label(class_='form-check-label') }} 
+                </p>
+            </div>
+            <div class="form-group">
+             <p>{{ form.submit() }} </p>
+            </div>
+        </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-8">
+        <div class="col-6">
             
         </div>
     </div>

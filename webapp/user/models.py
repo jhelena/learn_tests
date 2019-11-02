@@ -23,6 +23,14 @@ class Users(db.Model, UserMixin):
     def is_admin(self):
         return self.role =='admin'
 
+    @property
+    def is_department(self):
+        return self.role =='department'
+
+    @property
+    def is_student(self):
+        return self.role =='student'
+
     def __repr__(self):
         return '<Пользователь {} {}>'.format(self.full_name, self.role)
         #return format(self.full_name)

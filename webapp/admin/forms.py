@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from webapp.user.models import Users
-from wtforms import PasswordField, StringField, SubmitField
+from wtforms import PasswordField, StringField, SubmitField,SelectField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 #from wtforms.validators import DataRequired, Email, EqualTo  # было бы с Email, если бы у нас был email в форме регистрации 
 
@@ -8,7 +8,8 @@ class RegisrationForm(FlaskForm):
     user_name = StringField("Логин пользователя", validators=[DataRequired()], render_kw={"class": "form-control"})
     password = PasswordField("Пароль", validators=[DataRequired()], render_kw={"class": "form-control"})
     password2 = PasswordField("Пароль", validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"})
-    role = StringField("Роль пользователя", validators=[DataRequired()], render_kw={"class": "form-control"})
+    #role = StringField("Роль пользователя", validators=[DataRequired()], render_kw={"class": "form-control"})
+    role = SelectField(u'Роль пользователя', choices=[('student', 'Студент'), ('department', 'Кафедра')], validators=[DataRequired()], render_kw={"class": "form-control"})
     full_name = StringField("Полное имя", validators=[DataRequired()], render_kw={"class": "form-control"})
     major = StringField("Направление", render_kw={"class": "form-control"}) #убрали валидатор, т.к. не всегда заполняем и далее тоже
     prof = StringField("Профиль", render_kw={"class": "form-control"})
