@@ -11,32 +11,32 @@ class Major(db.Model):
 
 class Prof(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    major_id = db.Column(db.Integer, db.ForeignKey('major.id'), nullable=False)
+    major_id = db.Column(db.Integer, db.ForeignKey('major.id', ondelete='CASCADE'), nullable=False)
     prof_name = db.Column(db.String(255), index=True, nullable=False)
-    major = relationship('Major')
+    major = relationship('Major', backref='prof')
     
     def __repr__(self):
         return '<Профиль {} {}>'.format(self.prof_name)
 
 class Kurs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    major_id = db.Column(db.Integer, db.ForeignKey('major.id'), nullable=False)
-    prof_id = db.Column(db.Integer, db.ForeignKey('prof.id'), nullable=False)
+    major_id = db.Column(db.Integer, db.ForeignKey('major.id', ondelete='CASCADE'), nullable=False)
+    prof_id = db.Column(db.Integer, db.ForeignKey('prof.id', ondelete='CASCADE'), nullable=False)
     depart_id = db.Column(db.Integer, nullable=False)
     kurs_name = db.Column(db.String(255), index=True, nullable=False)
     img_folder = db.Column(db.String(255), nullable=True)
     percent_result = db.Column(db.Integer, nullable=False)
     major = relationship('Major')
-    prof = relationship('Prof')
+    prof = relationship('Prof', backref='kurs')
 
     def __repr__(self):
         return '<Дисциплина {} {}>'.format(self.kurs_name)
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    major_id = db.Column(db.Integer, db.ForeignKey('major.id'), nullable=False)
-    prof_id = db.Column(db.Integer, db.ForeignKey('prof.id'), nullable=False)
-    kurs_id = db.Column(db.Integer, db.ForeignKey('kurs.id'), nullable=False)
+    major_id = db.Column(db.Integer, db.ForeignKey('major.id', ondelete='CASCADE'), nullable=False)
+    prof_id = db.Column(db.Integer, db.ForeignKey('prof.id', ondelete='CASCADE'), nullable=False)
+    kurs_id = db.Column(db.Integer, db.ForeignKey('kurs.id', ondelete='CASCADE'), nullable=False)
     q_text = db.Column(db.Text, nullable=False)
     img_name = db.Column(db.String(255), nullable=True)
     answ1 = db.Column(db.String(255), nullable=False)
@@ -48,8 +48,7 @@ class Question(db.Model):
 
     major = relationship('Major')
     prof = relationship('Prof')
-    kurs = relationship('Kurs')
-
+    kurs = relationship('Kurs', backref='questions')
 
     def __repr__(self):
         return '<Вопрос {} {}>'.format(self.q_text)

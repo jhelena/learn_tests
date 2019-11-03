@@ -12,7 +12,7 @@ class QuestionForm(FlaskForm):
     major_id = SelectField(u'Направление', choices=[('1', 'Прикладная информатика'), ('2', 'Экономика')], validators=[DataRequired()], render_kw={"class": "form-control"})
     prof_id = SelectField(u'Профиль', choices=[('1', 'Прикладная информатика в дизайне'), ('2', 'Финансы и кредит'), ('3', 'Прикладная информатика в экономике')], validators=[DataRequired()], render_kw={"class": "form-control"})
     kurs_id = SelectField(u'Дисциплина', choices=[('1', 'Информатика и программирование'), ('2', 'WEB-дизайн')], validators=[DataRequired()], render_kw={"class": "form-control"})
-    img_name = FileField(u'Загрузить фйал', render_kw={"class": "form-control"})    
+    img_name = FileField(u'Загрузить фйал')    
     q_text = StringField("Текст вопроса", validators=[DataRequired()], render_kw={"class": "form-control"})
     answ1 = StringField("Вариант ответа 1", validators=[DataRequired()], render_kw={"class": "form-control"})
     answ1_true = BooleanField('Правильный', default=True, render_kw={"class": "form-check-input"})
@@ -22,14 +22,8 @@ class QuestionForm(FlaskForm):
     answ3_true = BooleanField('Правильный', default=False, render_kw={"class": "form-check-input"})
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
-'''    
-    def validate_user_name(self, user_name):
-        users_count = Users.query.filter_by(user_name=user_name.data).count()
-        if users_count > 0:
-            raise ValidationError('Пользователь с таким логином уже зарегистрирован')
+class Test(FlaskForm):
+    pass
 
-    def validate_full_name(self, full_name):
-        users_count = Users.query.filter_by(full_name=full_name.data).count()
-        if users_count > 0:
-            raise ValidationError('Пользователь с таким именем уже зарегистрирован')
-'''
+class ResultTest(FlaskForm):
+    pass

@@ -13,7 +13,6 @@ from webapp.user.views import blueprint as user_blueprint
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('config.py')
-    #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     db.init_app(app)
      
     migrate = Migrate(app, db)
