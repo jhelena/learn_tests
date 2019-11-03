@@ -38,7 +38,7 @@ class Question(db.Model):
     prof_id = db.Column(db.Integer, db.ForeignKey('prof.id'), nullable=False)
     kurs_id = db.Column(db.Integer, db.ForeignKey('kurs.id'), nullable=False)
     q_text = db.Column(db.Text, nullable=False)
-    img_name = db.Column(db.SmallInteger, nullable=True)
+    img_name = db.Column(db.String(255), nullable=True)
     answ1 = db.Column(db.String(255), nullable=False)
     answ1_true = db.Column(db.SmallInteger, nullable=False)
     answ2 = db.Column(db.String(255), nullable=True)

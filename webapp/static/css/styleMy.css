@@ -17,3 +17,6 @@ body,h1,h2 {
     border: 1px solid  #323232;
     padding: 8px;
 }
+.nav-item a:hover{
+    color:  #ca2b04;
+}

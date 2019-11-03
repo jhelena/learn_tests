@@ -8,26 +8,35 @@
           <ul class="navbar-nav mr-auto">
             {% if current_user.is_admin %}
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('admin.admin_index') }}">Админка <span class="sr-only">(current)</span></a>
+                <a class="nav-link hlink" href="{{ url_for('admin.admin_index') }}">Админка <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('admin.register') }}">Зарегистрировать пользователя </a>
+            <li class="nav-item">
+                <a class="nav-link hlink" href="{{ url_for('admin.register') }}">Добавить пользователя </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link hlink" href="{{ url_for('admin.register') }}">Добавить направление</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link hlink" href="{{ url_for('admin.register') }}">Добавить профиль</a>
+        </li>
             {% endif %}
             {% if current_user.is_department %}
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('test.test_index') }}">Просмотреть тесты <span class="sr-only">(current)</span></a>
+                <a class="nav-link hlink" href="{{ url_for('test.test_index') }}">Ваши тесты <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('test.input') }}">Внести новый тест</a>
+                <a class="nav-link hlink" href="{{ url_for('test.input') }}">Внести новый тест</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link hlink" href="{{ url_for('test.test_index') }}">Просмотр результатов</a>
+          </li>
             {% endif %}
             {% if current_user.is_student %}
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('index') }}">Прохождение теста <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link hlink" href="{{ url_for('index') }}">Прохождение теста <span class="sr-only">(current)</span></a>
               </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Просмотр результатов</a>
+                <a class="nav-link hlink" href="#">Просмотр результатов</a>
             </li>
             {% endif %}
           </ul>
@@ -41,11 +50,11 @@
                 <span class="nav-link">Здравствуйте, {{ current_user.full_name }}</span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('user.logout') }}">Выйти</a>
+                <a class="nav-link hlink" href="{{ url_for('user.logout') }}">Выйти</a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('user.login') }}">Войти</a>
+                <a class="nav-link hlink" href="{{ url_for('user.login') }}">Войти</a>
             </li>
             {% endif %}
         </ul>
