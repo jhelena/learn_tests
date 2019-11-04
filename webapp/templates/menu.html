@@ -22,18 +22,18 @@
             {% endif %}
             {% if current_user.is_department %}
             <li class="nav-item active">
-                <a class="nav-link hlink" href="{{ url_for('test.test_index') }}">Ваши тесты <span class="sr-only">(current)</span></a>
+                <a class="nav-link hlink" href="{{ url_for('test.test_index', depart_id=depart_id) }}">Ваши тесты <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hlink" href="{{ url_for('test.input') }}">Внести новый тест</a>
+                <a class="nav-link hlink" href="{{ url_for('test.input', depart_id=depart_id) }}">Внести новый тест</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link hlink" href="{{ url_for('test.test_index') }}">Просмотр результатов</a>
+              <a class="nav-link hlink" href="{{ url_for('test.test_index', depart_id=depart_id) }}">Просмотр результатов</a>
           </li>
             {% endif %}
             {% if current_user.is_student %}
             <li class="nav-item">
-                <a class="nav-link hlink" href="{{ url_for('test.test_student') }}">Прохождение теста <span class="sr-only">(current)</span></a>
+                <a class="nav-link hlink" href="{{ url_for('test.test_student', user_id=current_user.id) }}">Прохождение теста <span class="sr-only">(current)</span></a>
               </li>
             <li class="nav-item">
                 <a class="nav-link hlink" href="{{ url_for('test.result_test') }}">Просмотр результатов</a>

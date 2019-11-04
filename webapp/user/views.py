@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, flash, render_template, redirect, url_for
+from flask import Blueprint, Flask, flash, current_app, render_template, redirect, url_for
 from flask_login import current_user, login_user, logout_user
 
 from webapp.user.forms import LoginForm
@@ -25,7 +25,12 @@ def process_login():
             if user.role =='admin':
                 return redirect(url_for('admin.admin_index'))
             elif user.role =='department':
-                return redirect(url_for('test.test_index'))
+                depart_id = user.id_depart
+                return redirect(url_for('test.test_index', depart_id=depart_id))
+            elif user.role =='student':
+                user_id = user.id
+                #prof_id = user.id_prof
+                return redirect(url_for('test.test_student', user_id=user_id))
             else:
                 return redirect(url_for('index'))
     

@@ -11,7 +11,7 @@ class QuestionForm(FlaskForm):
     #kurs_id = StringField("Дисциплина", validators=[DataRequired()], render_kw={"class": "form-control"})
     major_id = SelectField(u'Направление', choices=[('1', 'Прикладная информатика'), ('2', 'Экономика')], validators=[DataRequired()], render_kw={"class": "form-control"})
     prof_id = SelectField(u'Профиль', choices=[('1', 'Прикладная информатика в дизайне'), ('2', 'Финансы и кредит'), ('3', 'Прикладная информатика в экономике')], validators=[DataRequired()], render_kw={"class": "form-control"})
-    kurs_id = SelectField(u'Дисциплина', choices=[('1', 'Информатика и программирование'), ('2', 'WEB-дизайн')], validators=[DataRequired()], render_kw={"class": "form-control"})
+    kurs_id = SelectField(u'Дисциплина', choices=[('1', 'Информатика и программирование'), ('2', 'WEB-дизайн'), ('3', 'Прикладная семиотика')], validators=[DataRequired()], render_kw={"class": "form-control"})
     img_name = FileField(u'Загрузить фйал')    
     q_text = StringField("Текст вопроса", validators=[DataRequired()], render_kw={"class": "form-control"})
     answ1 = StringField("Вариант ответа 1", validators=[DataRequired()], render_kw={"class": "form-control"})

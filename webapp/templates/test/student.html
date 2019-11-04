@@ -15,15 +15,16 @@
                 </div>
                 {% endif %}
             {% endwith %}
-   <!--         <p><a href="{{ url_for('test.input') }}">Заполнить тест </a></p> 
+   <!--   
         </div>        
       <div class="col-6"> -->
         <h2>Выберите тест для прохождения</h2> 
           <table class="tableMy"> 
             <tr><th> Дисциплина </th><th> Порог прохождения, %</th></tr>
-            {% for tests in test_depart %} 
-              <tr><td>{{ tests.kurs_name}}</td>
-                  <td>{{ tests.percent_result }}</td>
+            {% for tests in test_student %} 
+              <tr>
+                <td><a class="nav-link hlink" href="{{ url_for('test.test_pass', kurs_id=tests.id) }}">{{ tests.kurs_name}}</a></td>
+                <td>{{ tests.percent_result }}</td>
               </tr>
             {% endfor%}
           </table>

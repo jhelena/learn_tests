@@ -12,7 +12,7 @@
     {% endwith %}
     <div class="row">
         <div class="col-6">
-        <form action="{{ url_for('test.process_input') }}" enctype=multipart/form-data method="POST"> 
+        <form action="{{ url_for('test.process_input', depart_id=depart_id) }}" enctype=multipart/form-data method="POST"> 
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.major_id.label }}
