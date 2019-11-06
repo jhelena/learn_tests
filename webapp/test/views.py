@@ -4,7 +4,7 @@ from webapp.db import db
 from flask_login import current_user, login_required
 from webapp.user.models import Users, Depart
 from webapp.user.forms import LoginForm
-from webapp.test.models import Major, Prof, Kurs, Question
+from webapp.test.models import Major, Prof, Kurs, Question, Result
 from webapp.test.forms import QuestionForm, TestForm
 
 from werkzeug.utils import secure_filename
@@ -39,11 +39,18 @@ def process_input(depart_id):
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
         else:
             filename = ''
+        
+        global answ3_true
+        answ3_true = 1 
+        if int(form.answ2_true.data) == 1:
+            answ3_true = 2
+        if int(form.answ3_true.data) == 1:
+            answ3_true = 3
+
         #вставка в БД
         new_question = Question(major_id=form.major_id.data, prof_id=form.prof_id.data, kurs_id=form.kurs_id.data,
-            q_text=form.q_text.data, img_name=filename, answ1=form.answ1.data, answ1_true=form.answ1_true.data, 
-            answ2=form.answ2.data, answ2_true=form.answ2_true.data, 
-            answ3=form.answ3.data, answ3_true=form.answ3_true.data)
+            q_text=form.q_text.data, img_name=filename, answ1=form.answ1.data, answ1_true=0, 
+            answ2=form.answ2.data, answ2_true=0, answ3=form.answ3.data, answ3_true=answ3_true)
         db.session.add(new_question)
         db.session.commit()
         flash('Вопрос успешно добавлен!')
@@ -79,9 +86,36 @@ def test_pass(kurs_id):
     return render_template('test/test_pass.html', page_title=title, user_id=user_id, kurs_id=kurs_id, 
         test_p=test_p, kurs_name=kurs_name, form=test_form)
 
-@blueprint.route("/result")
+@blueprint.route("/result", methods=['POST'])
 def result_test():
-    test_form = TestForm()
+    form = TestForm()
     if form.validate_on_submit():
+        user_id=current_user.id
+        kurs_id = request.form['kurs_id']
+        answ_test = Question.query.filter_by(kurs_id=kurs_id).all()
+        count = Question.query.filter_by(kurs_id=kurs_id).count()
+        i = 0
+        res = 0
+        for answ in answ_test:
+            i=i+1
+            a1= int(request.form['answ{}'.format(i)])
+            if a1 == int(answ.answ3_true):
+                res = int(res)+1
+        percent_res = int(res) * 100 / i
+
+        new_res = Result(kurs_id=kurs_id, user_id=user_id, user_name=form.username.data, percent_result=percent_res)
+        db.session.add(new_res)
+        db.session.commit()
+        flash('Результаты успешно занесены в базу!')
+        return redirect(url_for('test.test_student', user_id=current_user.id, percent_res=percent_res))
+    else:
+        for field, errors in form.errors.items():
+            flash('Ошибка в поле "{}": - {}'.format(
+                getattr(form, field).label.text,
+                errors
+            ))
+        return redirect(url_for('test.test_pass', kurs_id=kurs_id))
+    flash('Пожалуйста, исправьте ошибки в форме')
+    return redirect(url_for('test.test_student', user_id=current_user.id))
     
    

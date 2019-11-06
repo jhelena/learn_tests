@@ -1,7 +1,7 @@
 #Должно быть свое про тесты, пока копия из юзера
 from flask_wtf import FlaskForm
 from webapp.user.models import Users
-from wtforms import BooleanField, FileField, PasswordField, SelectField, StringField, SubmitField 
+from wtforms import BooleanField, FileField, HiddenField, PasswordField, SelectField, StringField, SubmitField 
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 #from wtforms.validators import DataRequired, Email, EqualTo  # было бы с Email, если бы у нас был email в форме регистрации 
 
@@ -23,6 +23,7 @@ class QuestionForm(FlaskForm):
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
 class TestForm(FlaskForm):
+    #kurs_id = HiddenField('ID курса', validators=[DataRequired()])
     username = StringField("Введите ФИО", validators=[DataRequired()], render_kw={"class": "form-control"})
     answ = BooleanField('', render_kw={"class": "form-check-input"})
     submit = SubmitField("Отправить результат", render_kw={"class": "btn btn-primary"})
