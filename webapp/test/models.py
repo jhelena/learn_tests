@@ -52,3 +52,16 @@ class Question(db.Model):
 
     def __repr__(self):
         return '<Вопрос {} {}>'.format(self.q_text)
+
+class Result(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    kurs_id = db.Column(db.Integer, db.ForeignKey('kurs.id', ondelete='CASCADE'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    user_name = db.Column(db.String(255), index=True, nullable=False)
+    percent_result = db.Column(db.FloatField, nullable=False)
+    data_test = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    kurs = relationship('Kurs(')
+    user = relationship('Users', backref='user')
+
+    def __repr__(self):
+        return '<Результат: {} {} {}>'.format(self.kurs_id, self.user_name, self.percent_result)

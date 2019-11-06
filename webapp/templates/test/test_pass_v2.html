@@ -20,10 +20,10 @@
           {% endif %}
           <br>
         <div class="form-group form-check">
-          <p class="input-group-addon"><input type="radio" id="answ{{loop.index}}" name="answ{{loop.index}}" value="{{ tests.answ1_true}}"> {{tests.answ1}}</p>
-          <p class="input-group-addon"><input type="radio" id="answ{{loop.index}}" name="answ{{loop.index}}" value="{{ tests.answ2_true}}"> {{tests.answ2}}</p>
-          <p class="input-group-addon"><input type="radio" id="answ{{loop.index}}" name="answ{{loop.index}}" value="{{ tests.answ3_true}}"> {{tests.answ3}}</p>
-            <br>
+          <p>{{ form.answ() }} {{ tests.answ1}}</p>
+          <p>{{ form.answ() }}{{ tests.answ2}}</p>
+          <p>{{ form.answ() }}{{ tests.answ3}}</p>
+          <br>
         </div>
         {% endfor%}
         {{ form.submit() }}

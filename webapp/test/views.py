@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from webapp.user.models import Users, Depart
 from webapp.user.forms import LoginForm
 from webapp.test.models import Major, Prof, Kurs, Question
-from webapp.test.forms import QuestionForm
+from webapp.test.forms import QuestionForm, TestForm
 
 from werkzeug.utils import secure_filename
 
@@ -71,10 +71,17 @@ def test_student(user_id):
 @blueprint.route("/test_pass/<int:kurs_id>")
 def test_pass(kurs_id):
     title = "Прохождение теста"
-    #test_student = Kurs.query.all()
-    return render_template('test/test_pass.html', page_title=title)
+    test_form = TestForm()
+    test_name = Kurs.query.filter_by(id=kurs_id).first()
+    kurs_name=test_name.kurs_name
+    user_id=current_user.id
+    test_p = Question.query.filter_by(kurs_id=kurs_id).all()
+    return render_template('test/test_pass.html', page_title=title, user_id=user_id, kurs_id=kurs_id, 
+        test_p=test_p, kurs_name=kurs_name, form=test_form)
 
 @blueprint.route("/result")
 def result_test():
-    pass
+    test_form = TestForm()
+    if form.validate_on_submit():
+    
    

@@ -22,8 +22,10 @@ class QuestionForm(FlaskForm):
     answ3_true = BooleanField('Правильный', default=False, render_kw={"class": "form-check-input"})
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
-class Test(FlaskForm):
-    pass
+class TestForm(FlaskForm):
+    username = StringField("Введите ФИО", validators=[DataRequired()], render_kw={"class": "form-control"})
+    answ = BooleanField('', render_kw={"class": "form-check-input"})
+    submit = SubmitField("Отправить результат", render_kw={"class": "btn btn-primary"})
 
 class ResultTest(FlaskForm):
     pass
