@@ -102,11 +102,12 @@ def result_test():
             if a1 == int(answ.answ3_true):
                 res = int(res)+1
         percent_res = int(res) * 100 / i
+        percent_res = '{:3.2f}'.format(percent_res)
 
         new_res = Result(kurs_id=kurs_id, user_id=user_id, user_name=form.username.data, percent_result=percent_res)
         db.session.add(new_res)
         db.session.commit()
-        flash('Результаты успешно занесены в базу!')
+        flash(f'Ваш результат: {percent_res}%. Данные успешно занесены в базу! ')
         return redirect(url_for('test.test_student', user_id=current_user.id, percent_res=percent_res))
     else:
         for field, errors in form.errors.items():
@@ -118,4 +119,35 @@ def result_test():
     flash('Пожалуйста, исправьте ошибки в форме')
     return redirect(url_for('test.test_student', user_id=current_user.id))
     
-   
+@blueprint.route("/view")
+def view_res():
+    title = "Результаты теста"
+    user_id=current_user.id
+    test_res = Result.query.filter_by(user_id=user_id).order_by(Result.user_id).all()
+    #test_res = db.session.query(Result, Kurs).filter_by(user_id=user_id).all()
+    #user_name=test_res.user_name
+    #res = test_res.percent_result
+    #kurs_id=test_res.kurs_id[user_id]
+    '''
+    kurs_name=[]
+    for kurs in test_res:
+        kurs_id = kurs.kurs_id
+        #name = Kurs.query.filter_by(id=kurs_id).all()
+        #test_name = name.kurs_name
+        test_name = Kurs.query.filter_by(id=kurs_id).first()
+        kurs_name.append(test_name.kurs_name)
+    kurs_name = set(kurs_name)
+    kurs_name = list(kurs_name)
+    '''
+    return render_template('test/result.html', page_title=title, test_res=test_res)
+
+@blueprint.route("/reskurs/<int:kurs_id>")
+def view_reskurs(kurs_id):
+    title = "Результаты теста по курсу"
+    user_id=current_user.id
+    user_depart = Users.query.filter(Users.id == user_id).first()
+    depart_id = user_depart.id_depart
+    test_res = Result.query.filter_by(kurs_id=kurs_id).all()
+    for kurs in test_res:
+        kurs_name = kurs.kurs
+    return render_template('test/result_kurs.html', page_title=title, test_res=test_res, depart_id=depart_id,kurs_name=kurs_name)   

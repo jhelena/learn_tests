@@ -18,15 +18,17 @@
    <!--         <p><a href="{{ url_for('test.input', depart_id=depart_id) }}">Заполнить тест </a></p> 
         </div>        
       <div class="col-6"> -->
-        <h2>Ваши тесты</h2> 
-          <table class="tableMy"> 
-            <tr><th> Дисциплина </th><th> Порог прохождения, %</th></tr>
-            {% for tests in test_depart %} 
-              <tr><td>{{ tests.kurs_name}}</td>
-                  <td>{{ tests.percent_result }}</td>
-              </tr>
-            {% endfor%}
-          </table>
-      </div>
+    <h2>Ваши тесты</h2> 
+      <table class="tableMy"> 
+        <tr><th> Дисциплина </th><th> Порог прохождения, %</th><th> Просмотр результатов</th></tr>
+        {% for tests in test_depart %} 
+          <tr><td>{{ tests.kurs_name}}</td>
+              <td>{{ tests.percent_result }}</td>
+              <td><a class="nav-link hlink" href="{{ url_for('test.view_reskurs', kurs_id= tests.id) }}">
+                Просмотр результатов</a></td>
+          </tr>
+        {% endfor%}
+      </table>
   </div>
-    {% endblock %}
+  </div>
+{% endblock %}

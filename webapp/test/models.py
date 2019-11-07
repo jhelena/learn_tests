@@ -31,7 +31,7 @@ class Kurs(db.Model):
     prof = relationship('Prof', backref='kurs')
 
     def __repr__(self):
-        return '<Дисциплина {} {}>'.format(self.kurs_name)
+        return ' {}'.format(self.kurs_name)
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)

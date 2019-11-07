@@ -15,14 +15,10 @@
    <!--   
         </div>        
       <div class="col-6"> -->
-    <h2>Результаты Вашей группы: </h2>
-      <p>
-        <table class='tableMy'> 
-          <!--   {{  test_res  }} -->
-            <br>
+    <h2>Результаты тестов по курсу: </h2>
+      <p> <table class='tableMy'> 
+        <tr><th colspan="2"> {{ kurs_name }} </th></tr>
           {% for res in test_res %} 
-            <tr><th colspan="2"> {{ res.kurs }} </th></tr>
-
             <tr><td>{{ res.user_name }}</td>
                 <td>{{ res.percent_result }}%</td>
             </tr>

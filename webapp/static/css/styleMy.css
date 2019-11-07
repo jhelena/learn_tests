@@ -16,6 +16,7 @@ body,h1,h2 {
 .tableMy,th,tr,td {
     border: 1px solid  #323232;
     padding: 8px;
+    text-align: center;
 }
 .nav-item a:hover{
     color:  #ca2b04;

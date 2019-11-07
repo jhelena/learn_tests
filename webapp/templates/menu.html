@@ -28,7 +28,7 @@
                 <a class="nav-link hlink" href="{{ url_for('test.input', depart_id=depart_id) }}">Внести новый тест</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link hlink" href="{{ url_for('test.test_index', depart_id=depart_id) }}">Просмотр результатов</a>
+             <!--   <a class="nav-link hlink" href="{{ url_for('test.view_res') }}">Просмотр результатов</a> -->
           </li>
             {% endif %}
             {% if current_user.is_student %}
@@ -36,18 +36,22 @@
                 <a class="nav-link hlink" href="{{ url_for('test.test_student', user_id=current_user.id) }}">Выбор теста <span class="sr-only">(current)</span></a>
               </li>
             <li class="nav-item">
-                <a class="nav-link hlink" href="{{ url_for('test.result_test') }}">Просмотр результатов</a>
+             <a class="nav-link hlink" href="{{ url_for('test.view_res') }}">Просмотр результатов</a>   
             </li>
             {% endif %}
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
+          </ul> 
+    <!--      <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-          </form>
+          </form> -->
         <ul class="navbar-nav">
            {% if current_user.is_authenticated %}
             <li class="nav-item">   
+                {% if current_user.is_department %}
+                <span class="nav-link">Здравствуйте, кафедра {{ current_user.full_name }}</span>
+                {% else %}
                 <span class="nav-link">Здравствуйте, {{ current_user.full_name }}</span>
+                {% endif %}
             </li>
             <li class="nav-item">
                 <a class="nav-link hlink" href="{{ url_for('user.logout') }}">Выйти</a>
