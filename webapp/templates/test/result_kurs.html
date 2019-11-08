@@ -2,7 +2,7 @@
 
 {% block content %} 
     <div class="row">
-      <div class="col-8">
+      <div class="col-6 divleft">
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           <div class="alert alert-warning" role="alert">
@@ -12,19 +12,54 @@
           </div>
         {% endif %}
       {% endwith %}
-   <!--   
-        </div>        
-      <div class="col-6"> -->
     <h2>Результаты тестов по курсу: </h2>
-      <p> <table class='tableMy'> 
-        <tr><th colspan="2"> {{ kurs_name }} </th></tr>
-          {% for res in test_res %} 
-            <tr><td>{{ res.user_name }}</td>
-                <td>{{ res.percent_result }}%</td>
-            </tr>
-           {% endfor%}
-        </table>
-      </p>
+     <p> <table class='tableMy'> 
+       <tr><th colspan="2"> {{ kurs_name }} </th></tr>
+         {% for res in test_res %} 
+           <tr><td>{{ res.user_name }}</td>
+               <td>{{ res.percent_result }}%</td>
+           </tr>
+          {% endfor%}
+       </table>
+     </p>
+    </div>      
+    <div class="col-6">
+      <!-- bar chart canvas element -->
+      <script src="/static/js/Chart.min.js"></script>
+      <canvas id="chart" width="600" height="400"></canvas>
     </div>
-  </div>
-    {% endblock %}
+  </div> 
+<script >
+var barData = {
+  labels : [{% for item in labels %}
+     "{{item}}",
+    {% endfor %}],
+ datasets : [
+    {
+        fillColor:  ["rgba(151,187,205,0.2)"],
+        strokeColor: ["rgba(151,187,205,1)"],
+        pointColor: "rgba(151,187,205,1)",
+        data : [{% for item in values %}
+           {{item}},
+          {% endfor %}]
+        }]
+ }
+ 
+ var mychart = document.getElementById("chart").getContext("2d");
+ steps = 10
+ max = 100
+ 
+ new Chart(mychart).Bar(barData, {
+      scaleOverride: true,
+      scaleSteps: steps,
+      scaleStepWidth: Math.ceil(max / steps),
+      scaleStartValue: 0,
+      scaleShowVerticalLines: true,
+      scaleShowGridLines : true,
+      barShowStroke : true,
+      scaleShowLabels: true
+ });
+</script>
+<p></p>
+<!-- <script src="/static/js/graph.js"></script> -->
+{% endblock %}

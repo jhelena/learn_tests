@@ -147,7 +147,13 @@ def view_reskurs(kurs_id):
     user_id=current_user.id
     user_depart = Users.query.filter(Users.id == user_id).first()
     depart_id = user_depart.id_depart
+    labels=[]
+    values=[]
     test_res = Result.query.filter_by(kurs_id=kurs_id).all()
     for kurs in test_res:
         kurs_name = kurs.kurs
-    return render_template('test/result_kurs.html', page_title=title, test_res=test_res, depart_id=depart_id,kurs_name=kurs_name)   
+        labels.append(kurs.user_name)
+        values.append(kurs.percent_result)
+
+    return render_template('test/result_kurs.html', page_title=title, test_res=test_res, depart_id=depart_id,
+        kurs_name=kurs_name, values=values, labels=labels)   

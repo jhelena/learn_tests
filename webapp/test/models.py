@@ -17,7 +17,7 @@ class Prof(db.Model):
     major = relationship('Major', backref='prof')
     
     def __repr__(self):
-        return '<Профиль {} {}>'.format(self.prof_name)
+        return '<Профиль {}>'.format(self.prof_name)
 
 class Kurs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +52,7 @@ class Question(db.Model):
     kurs = relationship('Kurs', backref='questions')
 
     def __repr__(self):
-        return '<Вопрос {} {}>'.format(self.q_text)
+        return '<Вопрос {}>'.format(self.q_text)
 
 class Result(db.Model):
     id = db.Column(db.Integer, primary_key=True)
