@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %} 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }} <br>
+        </div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="row">
+        <div class="col-6">
+        <form action="{{ url_for('test.process_input_kurs', depart_id=depart_id) }}" method="POST"> 
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.major_id.label }}
+                {{ form.major_id() }}
+            </div>
+            <div class="form-group">
+                {{ form.prof_id.label }} <br>
+                {{ form.prof_id() }}
+            </div>
+            <div class="form-group">
+                {{ form.kurs_name.label }}
+                {{ form.kurs_name() }}
+            </div>
+            <div class="">
+                {{ form.percent_result.label }} <br>
+                {{ form.percent_result() }}
+            </div>
+            <br>
+            <div class="form-group">
+             <p>{{ form.submit() }} </p>
+            </div>
+        </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            
+        </div>
+    </div>
+{% endblock %}

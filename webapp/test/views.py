@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from webapp.user.models import Users, Depart
 from webapp.user.forms import LoginForm
 from webapp.test.models import Major, Prof, Kurs, Question, Result
-from webapp.test.forms import QuestionForm, TestForm
+from webapp.test.forms import QuestionForm, TestForm, KursForm
 
 from werkzeug.utils import secure_filename
 
@@ -17,16 +17,42 @@ def test_index(depart_id):
     test_depart = Kurs.query.filter(Kurs.depart_id == depart_id).all()
     return render_template('test/depart.html', page_title=title, test_depart=test_depart, depart_id=depart_id)
 
+@blueprint.route('/input_kurs/<int:depart_id>')
+def input_kurs(depart_id):
+    form = KursForm()
+    title = "Ввод нового курса"
+    return render_template('test/input_kurs.html', page_title=title, form=form, depart_id=depart_id)
+
+@blueprint.route('/process-input_kurs/<int:depart_id>', methods=['POST'])
+def process_input_kurs(depart_id):
+    form = KursForm()
+    if form.validate_on_submit():
+        #вставка в БД
+        new_kurs = Kurs(major_id=form.major_id.data, prof_id=form.prof_id.data, depart_id=depart_id,
+            kurs_name=form.kurs_name.data, percent_result=form.percent_result.data)
+        db.session.add(new_kurs)
+        db.session.commit()
+        flash('Курс успешно добавлен!')
+        return redirect(url_for('test.test_index', depart_id=depart_id))
+    else:
+        for field, errors in form.errors.items():
+            flash('Ошибка в поле "{}": - {}'.format(
+                getattr(form, field).label.text,
+                errors
+            ))
+        return redirect(url_for('test.input_kurs'))
+    flash('Пожалуйста, исправьте ошибки в форме')
+    return redirect(url_for('test.input_kurs', depart_id=depart_id))
+
 @blueprint.route('/input/<int:depart_id>')
 def input(depart_id):
     form = QuestionForm()
-    title = "Ввод теста"
+    title = "Ввод вопросов теста"
     return render_template('test/input.html', page_title=title, form=form, depart_id=depart_id)
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
-
 
 @blueprint.route('/process-input/<int:depart_id>', methods=['POST'])
 def process_input(depart_id):
@@ -86,6 +112,18 @@ def test_pass(kurs_id):
     return render_template('test/test_pass.html', page_title=title, user_id=user_id, kurs_id=kurs_id, 
         test_p=test_p, kurs_name=kurs_name, form=test_form)
 
+@blueprint.route("/test_view/<int:kurs_id>")
+def test_view(kurs_id):
+    title = "Просмотр теста"
+    test_name = Kurs.query.filter_by(id=kurs_id).first()
+    kurs_name=test_name.kurs_name
+    user_id=current_user.id
+    user_depart = Users.query.filter(Users.id == user_id).first()
+    depart_id = user_depart.id_depart
+    test_v = Question.query.filter_by(kurs_id=kurs_id).all()
+    return render_template('test/test_view.html', page_title=title, user_id=user_id, kurs_id=kurs_id, 
+        test_v=test_v, kurs_name=kurs_name, depart_id=depart_id,)
+
 @blueprint.route("/result", methods=['POST'])
 def result_test():
     form = TestForm()
@@ -123,22 +161,7 @@ def result_test():
 def view_res():
     title = "Результаты теста"
     user_id=current_user.id
-    test_res = Result.query.filter_by(user_id=user_id).order_by(Result.user_id).all()
-    #test_res = db.session.query(Result, Kurs).filter_by(user_id=user_id).all()
-    #user_name=test_res.user_name
-    #res = test_res.percent_result
-    #kurs_id=test_res.kurs_id[user_id]
-    '''
-    kurs_name=[]
-    for kurs in test_res:
-        kurs_id = kurs.kurs_id
-        #name = Kurs.query.filter_by(id=kurs_id).all()
-        #test_name = name.kurs_name
-        test_name = Kurs.query.filter_by(id=kurs_id).first()
-        kurs_name.append(test_name.kurs_name)
-    kurs_name = set(kurs_name)
-    kurs_name = list(kurs_name)
-    '''
+    test_res = Result.query.filter_by(user_id=user_id).order_by(Result.kurs_id).all()
     return render_template('test/result.html', page_title=title, test_res=test_res)
 
 @blueprint.route("/reskurs/<int:kurs_id>")
@@ -149,11 +172,15 @@ def view_reskurs(kurs_id):
     depart_id = user_depart.id_depart
     labels=[]
     values=[]
-    test_res = Result.query.filter_by(kurs_id=kurs_id).all()
-    for kurs in test_res:
-        kurs_name = kurs.kurs
-        labels.append(kurs.user_name)
-        values.append(kurs.percent_result)
-
-    return render_template('test/result_kurs.html', page_title=title, test_res=test_res, depart_id=depart_id,
-        kurs_name=kurs_name, values=values, labels=labels)   
+    test_count = Result.query.filter_by(kurs_id=kurs_id).count()
+    if test_count != 0:
+        test_res = Result.query.filter_by(kurs_id=kurs_id).all()
+        for kurs in test_res:
+            kurs_name = kurs.kurs
+            labels.append(kurs.user_name)
+            values.append(kurs.percent_result)
+        return render_template('test/result_kurs.html', page_title=title, test_res=test_res, depart_id=depart_id,
+        kurs_name=kurs_name, values=values, labels=labels)
+    else:
+        flash('Результатов прохождения этого теста нет.')
+        return redirect(url_for('test.test_index', depart_id=depart_id))

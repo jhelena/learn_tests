@@ -15,13 +15,10 @@ def admin_index():
     title = "Администрирование"
     users_list = Users.query.all()
     return render_template('admin/admin.html', page_title=title, users_list=users_list)
-    #return render_template('login.html', page_title=title)
 
 @blueprint.route('/register')
 @admin_required
 def register():
-    #if current_user.is_authenticated:
-        #return redirect(url_for('index'))
     form = RegisrationForm()
     title = "Регистрация"
     return render_template('admin/registration.html', page_title=title, form=form)
@@ -35,7 +32,7 @@ def process_reg():
         db.session.add(new_user)
         db.session.commit()
         flash('Пользователь успешно зарегистрирован!')
-        return redirect(url_for('user.login'))
+        return redirect(url_for('admin.admin_index'))
     else:
         for field, errors in form.errors.items():
             flash('Ошибка в поле "{}": - {}'.format(

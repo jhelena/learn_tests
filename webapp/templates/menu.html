@@ -25,7 +25,10 @@
                 <a class="nav-link hlink" href="{{ url_for('test.test_index', depart_id=depart_id) }}">Ваши тесты <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link hlink" href="{{ url_for('test.input', depart_id=depart_id) }}">Внести новый тест</a>
+                <a class="nav-link hlink" href="{{ url_for('test.input', depart_id=depart_id) }}">Добавить новый вопрос</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hlink" href="{{ url_for('test.input_kurs', depart_id=depart_id) }}">Добавить новый курс</a>
             </li>
             <li class="nav-item">
              <!--   <a class="nav-link hlink" href="{{ url_for('test.view_res') }}">Просмотр результатов</a> -->

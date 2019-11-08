@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %} 
+  <div class="row">
+    <div class="col-8">
+      <h2>Дисциплина "{{ kurs_name }}"</h2>
+      <br><!-- в   -->
+       {% for tests in test_v %} 
+        <p><b>Вопрос {{ loop.index }} </b></p>
+        <p><b>{{ tests.q_text }}</b></p>
+          {% if tests.img_name != '' %}
+            <img src="/static/upload/{{tests.img_name}}"><br>
+          {% endif %}
+          <br>
+        <div>
+          <p>{{ tests.answ1 }}</p>
+          <p>{{ tests.answ2 }}</p>
+          <p>{{ tests.answ3 }}</p>
+          <br>
+        </div>
+        {% endfor%}
+        <br><br>
+      </div>
+  </div>
+    {% endblock %}
